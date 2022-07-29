@@ -1,0 +1,2 @@
+INSERT INTO tb_client (name, cpf, income, birth_Date, children, created_At, updated_At) VALUES ('Rodrigo Bittencourt de Lima', '10343780909', 10000.00, TIMESTAMP WITH TIME ZONE '1995-06-20T08:50:07.12345Z', 0, NOW(), NOW());
+INSERT INTO tb_client (name, cpf, income, birth_Date, children, created_At, updated_At) VALUES ('Ana Santos', '10343780908', 10000.00, TIMESTAMP WITH TIME ZONE '1995-06-20T08:50:07.12345Z', 0, NOW(), NOW());
