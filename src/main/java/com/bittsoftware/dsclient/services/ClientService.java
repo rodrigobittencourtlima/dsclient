@@ -1,13 +1,15 @@
 package com.bittsoftware.dsclient.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import com.bittsoftware.dsclient.dtos.ClientDTO;
 import com.bittsoftware.dsclient.entities.Client;
 import com.bittsoftware.dsclient.repositories.ClientRepository;
+import com.bittsoftware.dsclient.services.exceptions.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +20,16 @@ public class ClientService {
 	private ClientRepository repository;
 
 	@Transactional(readOnly = true)
-	public List<ClientDTO> findAll() {
-		return repository.findAll().stream().map(entity -> new ClientDTO(entity)).collect(Collectors.toList());
+	public Page<ClientDTO> findAll(PageRequest pageRequest) {
+		Page<Client> clients = repository.findAll(pageRequest);
+		return clients.map(entity -> new ClientDTO(entity));
+	}
+
+	@Transactional(readOnly = true)
+	public ClientDTO findById(Long id) {
+		Optional<Client> obj = repository.findById(id);
+		Client entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		return new ClientDTO(entity);
 	}
 
 	@Transactional
