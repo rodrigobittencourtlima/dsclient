@@ -2,6 +2,8 @@ package com.bittsoftware.dsclient.services;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.bittsoftware.dsclient.dtos.ClientDTO;
 import com.bittsoftware.dsclient.entities.Client;
 import com.bittsoftware.dsclient.repositories.ClientRepository;
@@ -35,6 +37,18 @@ public class ClientService {
 	@Transactional
 	public ClientDTO insert(ClientDTO dto) {
 		return new ClientDTO(repository.save(new Client(dto)));
+	}
+
+	@Transactional
+	public ClientDTO update(Long id, ClientDTO dto) {
+		try {
+			Client entity = repository.getReferenceById(id);
+			entity.setName(dto.getName());
+			entity = repository.save(entity);
+			return entity.toDTO();
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
 	}
 
 }

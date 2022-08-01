@@ -61,6 +61,10 @@ public class Client {
 		this.children = dto.getChildren();
 	}
 
+	public ClientDTO toDTO() {
+		return new ClientDTO(id, name, cpf, income, birthDate, children);
+	}
+
 	public Long getId() {
 		return id;
 	}
