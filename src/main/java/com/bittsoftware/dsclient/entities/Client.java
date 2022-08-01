@@ -12,6 +12,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.bittsoftware.dsclient.dtos.ClientDTO;
+
 @Entity
 @Table(name = "tb_client")
 public class Client {
@@ -47,6 +49,16 @@ public class Client {
 		this.children = children;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	}
+
+	public Client(ClientDTO dto) {
+		super();
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.cpf = dto.getCpf();
+		this.income = dto.getIncome();
+		this.birthDate = dto.getBirthDate();
+		this.children = dto.getChildren();
 	}
 
 	public Long getId() {
